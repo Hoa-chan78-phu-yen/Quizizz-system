@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách bài thi - Online Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <header>
+      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <nav>
+        <a th:href="@{/}">Trang chủ</a>
+        <a th:href="@{/login}">Đăng nhập</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <h2>Danh sách bài thi hiện có</h2>
+
+      <!-- Danh sách giả lập (Hardcode) chưa có dữ liệu từ Database -->
+      <div class="quiz-grid">
+        <div class="quiz-card">
+          <h3>Lập trình Java Cơ Bản</h3>
+          <p>
+            Kiểm tra kiến thức về biến, vòng lặp, và hướng đối tượng trong Java.
+          </p>
+          <p><strong>Thời gian:</strong> 15 phút</p>
+          <a href="#" class="btn-start">Bắt đầu thi</a>
+        </div>
+
+        <div class="quiz-card">
+          <h3>Lập trình Web với Spring Boot</h3>
+          <p>Bài thi tổng hợp về cấu trúc MVC, REST API và JPA.</p>
+          <p><strong>Thời gian:</strong> 30 phút</p>
+          <a href="#" class="btn-start">Bắt đầu thi</a>
+        </div>
+
+        <div class="quiz-card">
+          <h3>Kiến thức HTML & CSS</h3>
+          <p>Đánh giá kỹ năng thiết kế và căn chỉnh giao diện website.</p>
+          <p><strong>Thời gian:</strong> 20 phút</p>
+          <a href="#" class="btn-start">Bắt đầu thi</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,13 +1,12 @@
-package Hoa_Thanh_Hai.Quizizz_system;
-
+package HoaThanhHai.quiz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class QuizizzSystemApplication {
+public class QuizApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(QuizizzSystemApplication.class, args);
+		SpringApplication.run(QuizApplication.class, args);
 	}
 
 }

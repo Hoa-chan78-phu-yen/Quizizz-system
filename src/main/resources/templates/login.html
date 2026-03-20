@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập - Online Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <header>
+      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <nav>
+        <a th:href="@{/}">Trang chủ</a>
+      </nav>
+    </header>
+
+    <div class="form-container">
+      <h2>Đăng Nhập</h2>
+      <!-- Form rỗng, chưa có action gửi đi -->
+      <form>
+        <div class="form-group">
+          <label for="username">Tên đăng nhập / Email</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Nhập tên đăng nhập..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input type="password" id="password" placeholder="Nhập mật khẩu..." />
+        </div>
+        <button type="button" class="btn">Đăng Nhập</button>
+      </form>
+      <p class="text-center">
+        Chưa có tài khoản? <a th:href="@{/register}">Đăng ký ngay</a>
+      </p>
+    </div>
+  </body>
+</html>

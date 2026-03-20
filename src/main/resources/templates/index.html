@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Chủ - Online Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <header>
+      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <nav>
+        <a th:href="@{/}">Trang chủ</a>
+        <a th:href="@{/quizzes}">Danh sách bài thi</a>
+        <a th:href="@{/login}">Đăng nhập</a>
+        <a th:href="@{/register}">Đăng ký</a>
+      </nav>
+    </header>
+
+    <div class="container text-center">
+      <h2 style="margin-bottom: 20px">Chào mừng bạn đến với Online Quiz!</h2>
+      <p>
+        Hệ thống cung cấp các bài thi trắc nghiệm đa dạng, giúp bạn ôn tập và
+        kiểm tra kiến thức một cách hiệu quả.
+      </p>
+      <br />
+      <a
+        th:href="@{/quizzes}"
+        class="btn"
+        style="width: auto; display: inline-block; padding: 10px 25px"
+        >Khám phá bài thi ngay</a
+      >
+    </div>
+  </body>
+</html>
