@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import HoaThanhHai.quiz.dto.SubmitAnswerDTO;
+import HoaThanhHai.quiz.dto.request.SubmitAnswerDTO;
 import HoaThanhHai.quiz.entity.Result;
 import HoaThanhHai.quiz.service.ResultService;
 

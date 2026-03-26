@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import HoaThanhHai.quiz.dto.SubmitAnswerDTO;
+import HoaThanhHai.quiz.dto.request.SubmitAnswerDTO;
 import HoaThanhHai.quiz.entity.Answer;
 import HoaThanhHai.quiz.entity.Question;
 import HoaThanhHai.quiz.entity.Quiz;

@@ -20,22 +20,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+
     private Integer userId;
 
-    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "created_at")
 	@CreationTimestamp
     private LocalDateTime createdAt;
 

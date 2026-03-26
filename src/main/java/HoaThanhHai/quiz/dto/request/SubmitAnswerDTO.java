@@ -1,4 +1,4 @@
-package HoaThanhHai.quiz.dto;
+package HoaThanhHai.quiz.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

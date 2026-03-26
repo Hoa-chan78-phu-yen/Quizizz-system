@@ -33,4 +33,5 @@ public class QuizController {
     public Quiz createQuiz(@RequestBody Quiz quiz) {
     return quizService.createQuiz(quiz);
     }
+    
 }

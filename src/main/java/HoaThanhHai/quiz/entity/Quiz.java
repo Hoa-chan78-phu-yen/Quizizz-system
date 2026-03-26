@@ -20,23 +20,18 @@ public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "quiz_id")
     private Integer quizId;
 
-    @Column(nullable = false)
     private String title;
 
     private String description;
 
-    @Column(name = "total_time_limit")
     private Integer totalTimeLimit;
 
-    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToMany
