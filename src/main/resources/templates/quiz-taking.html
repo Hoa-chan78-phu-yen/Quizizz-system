@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Làm Bài Thi - Online Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+      .quiz-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #eee;
+      }
+      .timer {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #d9534f; /* Màu đỏ cảnh báo thời gian */
+      }
+      .question-card {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      .options-list {
+        list-style: none;
+        padding: 0;
+      }
+      .options-list li {
+        margin: 10px 0;
+      }
+      .options-list label {
+        display: block;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .options-list label:hover {
+        background: #e9ecef;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <nav>
+        <a th:href="@{/quizzes}">Thoát bài thi (Mất điểm)</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="quiz-header">
+        <h2 th:text="${quizTitle}">Lập trình Java Cơ Bản</h2>
+        
+        <div class="timer">Thời gian: <span id="timeDisplay">15:00</span></div>
+      </div>
+
+      <form id="quizForm" th:action="@{/api/quiz/submit}" method="post">
+        
+        <input type="hidden" id="quizId" name="quizId" th:value="${quizId}" />
+
+        <div class="question-card" th:each="question, stat : ${questions}">
+          <h3 th:text="'Câu ' + ${stat.count} + ': ' + ${question.content}">
+            Câu 1: Từ khóa nào dùng để kế thừa một lớp trong Java?
+          </h3>
+          
+          <ul class="options-list">
+            <li th:each="answer : ${question.answers}">
+              <label>
+                <input type="radio" 
+                       th:name="'answers[' + ${question.id} + ']'" 
+                       th:value="${answer.id}" 
+                       required /> 
+                <span th:text="${answer.content}">A. extends</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 1.1rem;">Nộp Bài Bắt Buộc</button>
+      </form>
+    </div>
+
+    <script>
+      // Logic đếm ngược đơn giản (Giả sử 15 phút)
+      let timeInSeconds = 15 * 60; // Số này bạn có thể truyền từ Controller xuống (${timeLimit} * 60)
+      const timeDisplay = document.getElementById("timeDisplay");
+      const quizForm = document.getElementById("quizForm");
+
+      const timerInterval = setInterval(() => {
+        if (timeInSeconds <= 0) {
+          clearInterval(timerInterval);
+          alert("Hết giờ! Hệ thống sẽ tự động nộp bài.");
+          quizForm.submit(); // Tự động nộp khi hết giờ
+        } else {
+          timeInSeconds--;
+          const minutes = Math.floor(timeInSeconds / 60);
+          const seconds = timeInSeconds % 60;
+          // Format dạng 00:00
+          timeDisplay.textContent = 
+            (minutes < 10 ? "0" : "") + minutes + ":" + 
+            (seconds < 10 ? "0" : "") + seconds;
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

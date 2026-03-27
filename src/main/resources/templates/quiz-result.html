@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kết Quả Thi - Online Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+      .result-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .score-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #4caf50;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 20px auto;
+        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+      }
+      .score-details {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+      .fail-score {
+        background: #d9534f; /* Đổi màu đỏ nếu điểm thấp */
+        box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <nav>
+        <a th:href="@{/}">Trang chủ</a>
+        <a th:href="@{/quizzes}">Làm bài khác</a>
+      </nav>
+    </header>
+
+    <div class="result-container">
+      <h2>Hoàn Thành Bài Thi!</h2>
+      
+      <div class="score-circle" th:text="${score} + '/10'" th:classappend="${score < 5} ? 'fail-score' : ''">
+        8/10
+      </div>
+
+      <div class="score-details">
+        <p><strong>Tên bài thi:</strong> <span th:text="${quizTitle}">Lập trình Java Cơ Bản</span></p>
+        <p><strong>Số câu đúng:</strong> <span th:text="${correctAnswers} + '/' + ${totalQuestions}">8/10</span></p>
+        <p><strong>Thời gian làm bài:</strong> <span th:text="${timeTaken}">12 phút 30 giây</span></p>
+      </div>
+
+      <p th:if="${score >= 5}" style="color: #4caf50; font-weight: bold; font-size: 1.2rem;">
+        Tuyệt vời! Bạn đã vượt qua bài thi này.
+      </p>
+      <p th:if="${score < 5}" style="color: #d9534f; font-weight: bold; font-size: 1.2rem;">
+        Cố gắng hơn nhé! Kiến thức cần được ôn tập lại.
+      </p>
+
+      <br>
+      <a th:href="@{/quizzes}" class="btn" style="padding: 10px 30px;">Quay lại danh sách</a>
+    </div>
+  </body>
+</html>
