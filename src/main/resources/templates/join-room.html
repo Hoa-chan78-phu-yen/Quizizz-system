@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tham Gia Phòng Thi - Online Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+      .join-container {
+        max-width: 500px;
+        margin: 80px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .pin-input {
+        width: 100%;
+        padding: 15px;
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 8px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
+      .pin-input:focus {
+        border-color: #4caf50;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <nav>
+        <a th:href="@{/}">Trang chủ</a>
+      </nav>
+    </header>
+
+    <div class="join-container">
+      <h2 style="margin-bottom: 20px;">Tham Gia Bằng Mã PIN</h2>
+      <p style="color: #666; margin-bottom: 30px;">Vui lòng nhập mã phòng do giáo viên cung cấp để bắt đầu làm bài.</p>
+      
+      <form id="joinForm">
+        <input 
+          type="text" 
+          id="roomPin" 
+          class="pin-input" 
+          placeholder="123456" 
+          maxlength="8" 
+          required 
+          autocomplete="off"
+        />
+        <button type="submit" class="btn" style="width: 100%; font-size: 1.2rem; padding: 15px;">Vào Phòng</button>
+      </form>
+    </div>
+
+    <script>
+      document.getElementById("joinForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        
+        const pin = document.getElementById("roomPin").value.trim();
+
+        try {
+          // Gọi API để kiểm tra xem mã PIN này có tồn tại không và lấy thông tin bài thi
+          // Lưu ý: Đường dẫn API này bạn sẽ cần viết trong QuizController
+          const response = await fetch(`/api/quizzes/join?pin=${pin}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+
+          if (!response.ok) {
+            alert("Mã phòng không hợp lệ hoặc bài thi đã đóng!");
+            return;
+          }
+
+          const quiz = await response.json();
+          
+          // Nếu tìm thấy, chuyển hướng người dùng sang trang làm bài thi (mang theo quizId)
+          window.location.href = `/quiz/start/${quiz.quizId}`;
+
+        } catch (error) {
+          console.error(error);
+          alert("Lỗi kết nối đến máy chủ!");
+        }
+      });
+    </script>
+  </body>
+</html>

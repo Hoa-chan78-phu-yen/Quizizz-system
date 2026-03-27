@@ -14,6 +14,8 @@ import HoaThanhHai.quiz.entity.Result;
 import HoaThanhHai.quiz.service.QuizService;
 import HoaThanhHai.quiz.service.ResultService;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 @Controller
 public class PageController {
 
@@ -78,6 +80,21 @@ public class PageController {
         model.addAttribute("results", results);
 
         return "quiz-history";
+    }
+    @GetMapping("/quiz/start/{id}")
+    public String startQuizPage(@PathVariable("id") Long id) {
+        // Trong thực tế, bạn sẽ dùng QuizService để tìm bài thi theo ID
+        // và đẩy dữ liệu câu hỏi xuống Model trước khi return.
+        // Hiện tại chỉ trả về giao diện tĩnh:
+        return "quiz-taking";
+    }
+    @GetMapping("/quiz/result")
+    public String resultPage() {
+        return "quiz-result";
+    }
+    @GetMapping("/join")
+    public String joinRoomPage() {
+        return "join-room";
     }
 }
 
