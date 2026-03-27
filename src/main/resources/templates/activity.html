@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoạt động của tôi - Online Quiz</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <style>
+    /* Chỉnh style cho thanh điều hướng Tab */
+    .tabs-container {
+      display: flex;
+      border-bottom: 2px solid #e0e0e0;
+      margin-bottom: 25px;
+    }
+    .tab-item {
+      padding: 12px 24px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px; /* Đè lên viền của container */
+      transition: all 0.3s;
+    }
+    .tab-item.active {
+      color: #9c27b0; /* Màu tím đặc trưng của Quizizz */
+      border-bottom-color: #9c27b0;
+    }
+    .tab-item:hover {
+      color: #9c27b0;
+    }
+
+    /* Ẩn hiện nội dung Tab */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Thiết kế Card bài thi giống trong ảnh */
+    .activity-card {
+      width: 280px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 1px solid #eaeaea;
+    }
+    .card-header {
+      background: #4267b2; /* Màu xanh đậm */
+      color: white;
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-tag {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+    .card-due-date {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 15px;
+    }
+    .btn-action {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 8px;
+      border: 1px dashed #9c27b0;
+      color: #9c27b0;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+    .btn-action:hover {
+      background: #f3e5f5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+    <nav>
+      <a th:href="@{/}">Trang chủ</a>
+      <a th:href="@{/quizzes}">Tìm bài thi</a>
+      <a th:href="@{/activity}" style="color: #ffd700;">Hoạt động</a>
+    </nav>
+  </header>
+
+  <div class="container" style="max-width: 1000px; margin-top: 30px;">
+    
+    <div class="tabs-container">
+      <div class="tab-item active" onclick="switchTab('running')">Đang chạy ⏳</div>
+      <div class="tab-item" onclick="switchTab('completed')">Hoàn thành 🏆</div>
+      <div class="tab-item" onclick="switchTab('created')">Tạo 📝</div>
+    </div>
+
+    <div id="running" class="tab-content active">
+      <div class="activity-card">
+        <div class="card-header">
+          <span>📚 Được giao</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">1 Thẻ bài tập</div>
+          <h3 class="card-title">Kiểm tra Java giữa kỳ</h3>
+          <div class="card-due-date">Quá hạn: trong 12 ngày</div>
+          <a th:href="@{/join}" class="btn-action">▶ Trò chơi mới được giao</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="completed" class="tab-content">
+      <div class="activity-card">
+        <div class="card-header" style="background: #4caf50;">
+          <span>✔️ Đã nộp</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Trắc nghiệm</div>
+          <h3 class="card-title">Cơ sở dữ liệu MySQL</h3>
+          <div class="card-due-date">Điểm: 8/10</div>
+          <a href="#" class="btn-action" style="border-color: #4caf50; color: #4caf50;">Xem lại kết quả</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="created" class="tab-content">
+      <p style="color: #666; width: 100%; text-align: center; margin-top: 20px;">
+        Bạn chưa tạo bài thi nào. <br><br>
+        <button class="btn">Tạo bài thi mới</button>
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      // Bỏ class active ở tất cả các tab
+      document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      // Thêm class active cho tab được click
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

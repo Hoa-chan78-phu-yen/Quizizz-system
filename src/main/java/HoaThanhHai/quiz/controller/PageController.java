@@ -107,5 +107,9 @@ public class PageController {
     public String joinRoomPage() {
         return "join-room";
     }
+    @GetMapping("/activity")
+    public String activityPage() {
+        return "activity";
+    }
 }
 
