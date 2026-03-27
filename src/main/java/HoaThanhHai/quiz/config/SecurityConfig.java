@@ -29,6 +29,8 @@ public class SecurityConfig {
             .requestMatchers(
                 "/login",
                 "/register",
+                "/index"
+                ,
                 "/",
                 "/css/**",
                 "/js/**"
@@ -41,6 +43,15 @@ public class SecurityConfig {
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    //     http
+    //         .csrf(csrf -> csrf.disable()) // Tắt CSRF để dễ dàng test API qua Postman
+    //         .authorizeHttpRequests(auth -> auth
+    //             .anyRequest().permitAll() // Cho phép truy cập TẤT CẢ các đường dẫn mà không cần đăng nhập
+    //         );
+    //     return http.build();
+    // }
 
     
 }

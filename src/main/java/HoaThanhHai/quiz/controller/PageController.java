@@ -15,4 +15,13 @@ public class PageController {
     public String quizzesPage() {
         return "quizzes";
     }
+      @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
+     @GetMapping("/index")
+    public String indexPage() {
+        return "index";
+    }
 }
+
