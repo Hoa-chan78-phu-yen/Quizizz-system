@@ -8,13 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import HoaThanhHai.quiz.entity.Category;
 import HoaThanhHai.quiz.entity.Quiz;
 import HoaThanhHai.quiz.entity.Result;
+import HoaThanhHai.quiz.service.CategoryService;
 import HoaThanhHai.quiz.service.QuizService;
 import HoaThanhHai.quiz.service.ResultService;
-
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PageController {
@@ -25,6 +27,8 @@ public class PageController {
     @Autowired
     private ResultService resultService;
 
+    @Autowired
+    private CategoryService categoryService;
     @GetMapping("/")
     public String home() {
         return "index";
@@ -47,7 +51,7 @@ public class PageController {
         return "quiz-list";
     }
 
-    @GetMapping("/quiz/{id}")
+    @GetMapping("/quiz/{id:\\d+}")
     public String quiz(@PathVariable Integer id, Model model) {
 
         Quiz quiz = quizService.getQuizById(id);
@@ -81,17 +85,24 @@ public class PageController {
 
         return "quiz-history";
     }
-    @GetMapping("/quiz/start/{id}")
-    public String startQuizPage(@PathVariable("id") Long id) {
-        // Trong thực tế, bạn sẽ dùng QuizService để tìm bài thi theo ID
-        // và đẩy dữ liệu câu hỏi xuống Model trước khi return.
-        // Hiện tại chỉ trả về giao diện tĩnh:
-        return "quiz-taking";
+    @GetMapping("/quiz/create")
+    public String createQuizPage(Model model) {
+        List<Category> categories = categoryService.getAll();
+        model.addAttribute("categories", categories);
+        return "create-quiz";
     }
-    @GetMapping("/quiz/result")
-    public String resultPage() {
-        return "quiz-result";
+    @PostMapping("/quiz/create")
+    public String createQuiz(
+        @RequestParam String title,
+        @RequestParam String description,
+        @RequestParam Integer totalTimeLimit,
+        @RequestParam Integer categoryId
+    ) {
+
+        quizService.createQuiz(title, description, totalTimeLimit, categoryId);
+        return "/quizzes";
     }
+    
     @GetMapping("/join")
     public String joinRoomPage() {
         return "join-room";

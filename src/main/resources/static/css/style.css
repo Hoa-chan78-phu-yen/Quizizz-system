@@ -1,65 +1,121 @@
-/* Reset CSS cơ bản */
+/* ==================== RESET & BASE STYLES ==================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --primary: #0056b3;
+  --primary-dark: #004494;
+  --primary-light: #e7f1ff;
+  --white: #fff;
+  --black: #000;
+  --dark: #1a1a1a;
+  --text: #333;
+  --text-light: #6c757d;
+  --bg-light: #f8f9fa;
+  --border: #dee2e6;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  background-color: #f4f7f6;
-  color: #333;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e7f1ff 100%);
+  color: var(--text);
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Header & Điều hướng */
+/* ==================== HEADER & NAVIGATION ==================== */
 header {
-  background-color: #0056b3;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 1rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+header .container {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  margin: 0;
 }
 
 header h1 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin-left: 15px;
-  font-weight: bold;
-  transition: color 0.3s;
+  font-weight: 600;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  display: inline-block;
+  padding: 0.5rem 0;
 }
 
 nav a:hover {
-  color: #ffc107;
+  color: var(--warning);
+  text-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
 }
 
-/* Container chính */
+/* ==================== CONTAINER & LAYOUT ==================== */
 .container {
   max-width: 1200px;
-  margin: 30px auto;
-  padding: 20px;
+  margin: 40px auto;
+  padding: 30px;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  flex-grow: 1;
 }
 
-/* Responsive cho container */
+.text-center {
+  text-align: center;
+}
+
+h2 {
+  color: var(--primary);
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h3 {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+/* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
   .container {
     margin: 20px 10px;
-    padding: 15px;
+    padding: 20px;
   }
-  header {
-    flex-direction: column;
-    text-align: center;
+
+  header h1 {
+    font-size: 1.3rem;
   }
-  nav {
-    margin-top: 10px;
+
+  nav a {
+    margin: 0 5px !important;
+    font-size: 0.9rem;
   }
 }
 

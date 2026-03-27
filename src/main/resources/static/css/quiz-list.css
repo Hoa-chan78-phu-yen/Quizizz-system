@@ -1,15 +1,72 @@
-/* CSS riêng cho trang quiz-list */
+/* ==================== QUIZ-LIST.CSS - DANH SÁCH BÀI THI ==================== */
 .quiz-list-page h2 {
-  color: #0056b3;
+  color: var(--primary);
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
 }
 
-.quiz-list-page .card {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+.card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
 }
 
-.quiz-list-page .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 86, 179, 0.2);
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.card-title {
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.card-text {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.card-text strong {
+  color: var(--dark);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, var(--success) 0%, #1e7e34 100%);
+  border: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(40, 167, 69, 0.3);
+}
+
+.text-muted {
+  color: var(--text-light) !important;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .quiz-list-page h2 {
+    font-size: 1.5rem;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
 }
