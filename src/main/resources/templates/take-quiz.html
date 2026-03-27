@@ -1,82 +1,3 @@
-<!-- <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title th:text="${quiz.title}">Làm bài Quiz</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" th:href="@{/css/take-quiz.css}" />
-  </head>
-  <body>
-    <header class="bg-primary text-white py-3">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="h4 mb-0">Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-          <nav>
-            <a th:href="@{/quizzes}" class="text-white text-decoration-none me-3">Danh sách bài thi</a>
-            <a href="#" id="logoutBtn" class="text-white text-decoration-none" data-auth="logout">Đăng xuất</a>
-          </nav>
-        </div>
-      </div>
-    </header>
-
-    <div class="container mt-5 mb-5">
-      <h2 class="mb-4 text-center" th:text="${quiz.title}">
-        Tên Bài Trắc Nghiệm
-      </h2>
-
-      <form th:action="@{/quiz/{id}/submit(id=${quiz.id})}" method="post">
-        <div
-          class="card mb-4 shadow-sm"
-          th:each="question, stat : ${quiz.questions}"
-        >
-          <div class="card-header bg-light">
-            <strong>Câu <span th:text="${stat.count}">1</span>:</strong>
-            <span th:text="${question.content}">Nội dung câu hỏi ở đây?</span>
-          </div>
-          <div class="card-body">
-            <div class="form-check" th:each="answer : ${question.answers}">
-              <input
-                class="form-check-input"
-                type="radio"
-                th:name="'userAnswers[' + ${question.id} + ']'"
-                th:value="${answer.id}"
-                th:id="'answer_' + ${answer.id}"
-                required
-              />
-              <label
-                class="form-check-label"
-                th:for="'answer_' + ${answer.id}"
-                th:text="${answer.content}"
-              >
-                Nội dung đáp án
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center">
-          <button type="submit" class="btn btn-success btn-lg px-5">
-            Nộp bài
-          </button>
-          <a
-            th:href="@{/quizzes}"
-            class="btn btn-danger btn-lg px-5 ml-2"
-            onclick="
-              return confirm(
-                'Bạn có chắc chắn muốn thoát? Dữ liệu đang làm sẽ không được lưu.',
-              );
-            "
-            >Thoát</a
-          >
-        </div>
-      </form>
-    </div>
-    <script th:src="@{/js/auth.js}"></script>
-  </body>
-</html> -->
 <!doctype html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
   <head>
@@ -84,98 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Làm Bài Thi - Online Quiz</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-      .quiz-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #eee;
-      }
-      .timer {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #d9534f; /* Màu đỏ cảnh báo thời gian */
-      }
-      .question-card {
-        background: #f9f9f9;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-      }
-      .options-list {
-        list-style: none;
-        padding: 0;
-      }
-      .options-list li {
-        margin: 10px 0;
-      }
-      .options-list label {
-        display: block;
-        padding: 10px;
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
-      }
-      .options-list label:hover {
-        background: #e9ecef;
-      }
-    </style>
   </head>
   <body>
-    <header>
-      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-      <nav>
-        <a th:href="@{/quizzes}">Thoát bài thi (Mất điểm)</a>
-      </nav>
+    <header class="app-header">
+      <div class="app-header__inner">
+        <a th:href="@{/index}" class="app-logo">
+          <span class="app-logo__mark">Q</span>
+          <span>Quiz</span>
+        </a>
+        <nav class="app-nav">
+          <a th:href="@{/quiz}">Thoát bài thi</a>
+        </nav>
+      </div>
     </header>
 
-    <div class="container">
-      <div class="quiz-header">
-        <h2 th:text="${quizTitle}">Lập trình Java Cơ Bản</h2>
-
-        <div class="timer">Thời gian: <span id="timeDisplay">15:00</span></div>
-      </div>
-
-      <form id="quizForm" th:action="@{/api/quiz/submit}" method="post">
-        <input type="hidden" id="quizId" name="quizId" th:value="${quizId}" />
-
-        <div class="question-card" th:each="question, stat : ${questions}">
-          <h3 th:text="'Câu ' + ${stat.count} + ': ' + ${question.content}">
-            Câu 1: Từ khóa nào dùng để kế thừa một lớp trong Java?
-          </h3>
-
-          <ul class="options-list">
-            <li th:each="answer : ${question.answers}">
-              <label>
-                <input
-                  type="radio"
-                  th:name="'answers[' + ${question.id} + ']'"
-                  th:value="${answer.id}"
-                  required
-                />
-                <span th:text="${answer.content}">A. extends</span>
-              </label>
-            </li>
-          </ul>
+    <main class="app-main page-stack">
+      <section class="surface-card">
+        <div class="action-bar">
+          <div>
+            <h1 class="section-title" th:text="${quizTitle}">
+              Lập trình Java Cơ Bản
+            </h1>
+            <p class="section-copy">
+              Chọn một đáp án cho mỗi câu hỏi rồi nộp bài khi hoàn tất.
+            </p>
+          </div>
+          <div class="timer-pill">
+            <span>Thời gian</span>
+            <span id="timeDisplay">15:00</span>
+          </div>
         </div>
 
-        <button
-          type="submit"
-          class="btn"
-          style="width: 100%; padding: 15px; font-size: 1.1rem"
+        <form
+          id="quizForm"
+          th:action="@{/quiz/{id}/submit(id=${quizId})}"
+          method="post"
+          class="page-stack"
         >
-          Nộp Bài Bắt Buộc
-        </button>
-      </form>
-    </div>
+          <input type="hidden" id="quizId" name="quizId" th:value="${quizId}" />
 
-    <script>
-      // Logic đếm ngược đơn giản (Giả sử 15 phút)
-      let timeInSeconds = 15 * 60; // Số này bạn có thể truyền từ Controller xuống (${timeLimit} * 60)
+          <section
+            class="question-panel"
+            th:each="question, stat : ${questions}"
+          >
+            <h2
+              style="font-size: 1.3rem; margin-bottom: 16px"
+              th:text="'Câu ' + ${stat.count} + ': ' + ${question.content}"
+            >
+              Câu 1
+            </h2>
+
+            <ul class="option-list">
+              <li th:each="answer : ${question.answers}">
+                <label class="option-label">
+                  <input
+                    type="radio"
+                    th:name="'answers[' + ${question.questionId} + ']'"
+                    th:value="${answer.answerId}"
+                    required
+                  />
+                  <span th:text="${answer.content}">A. extends</span>
+                </label>
+              </li>
+            </ul>
+          </section>
+
+          <div class="button-row">
+            <button type="submit" class="btn btn-success btn-lg btn-block">
+              Nộp bài
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script th:inline="javascript">
+      let timeLimitMinutes = [[${timeLimit}]];
+      if (!timeLimitMinutes) timeLimitMinutes = 15;
+      let timeInSeconds = timeLimitMinutes * 60;
       const timeDisplay = document.getElementById("timeDisplay");
       const quizForm = document.getElementById("quizForm");
 
@@ -183,12 +90,11 @@
         if (timeInSeconds <= 0) {
           clearInterval(timerInterval);
           alert("Hết giờ! Hệ thống sẽ tự động nộp bài.");
-          quizForm.submit(); // Tự động nộp khi hết giờ
+          quizForm.submit();
         } else {
           timeInSeconds--;
           const minutes = Math.floor(timeInSeconds / 60);
           const seconds = timeInSeconds % 60;
-          // Format dạng 00:00
           timeDisplay.textContent =
             (minutes < 10 ? "0" : "") +
             minutes +

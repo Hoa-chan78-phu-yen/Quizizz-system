@@ -1,5 +1,6 @@
 package HoaThanhHai.quiz.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -50,7 +51,8 @@ public class ResultService {
         Result result = new Result();
         result.setUser(user);
         result.setQuiz(quiz);
-        result.setTotalQuestions(answers.size());
+        result.setTotalQuestions(quiz.getQuestions() != null ? quiz.getQuestions().size() : answers.size());
+        result.setCompletedAt(LocalDateTime.now());
 
         result = resultRepository.save(result);
 

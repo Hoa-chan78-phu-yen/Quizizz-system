@@ -48,7 +48,7 @@
   </head>
   <body>
     <header>
-      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+      <h1>Quiz</h1>
       <nav>
         <a th:href="@{/quizzes}">Thoát bài thi (Mất điểm)</a>
       </nav>
@@ -57,33 +57,40 @@
     <div class="container">
       <div class="quiz-header">
         <h2 th:text="${quizTitle}">Lập trình Java Cơ Bản</h2>
-        
+
         <div class="timer">Thời gian: <span id="timeDisplay">15:00</span></div>
       </div>
 
       <form id="quizForm" th:action="@{/api/quiz/submit}" method="post">
-        
         <input type="hidden" id="quizId" name="quizId" th:value="${quizId}" />
 
         <div class="question-card" th:each="question, stat : ${questions}">
           <h3 th:text="'Câu ' + ${stat.count} + ': ' + ${question.content}">
             Câu 1: Từ khóa nào dùng để kế thừa một lớp trong Java?
           </h3>
-          
+
           <ul class="options-list">
             <li th:each="answer : ${question.answers}">
               <label>
-                <input type="radio" 
-                       th:name="'answers[' + ${question.id} + ']'" 
-                       th:value="${answer.id}" 
-                       required /> 
+                <input
+                  type="radio"
+                  th:name="'answers[' + ${question.id} + ']'"
+                  th:value="${answer.id}"
+                  required
+                />
                 <span th:text="${answer.content}">A. extends</span>
               </label>
             </li>
           </ul>
         </div>
 
-        <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 1.1rem;">Nộp Bài Bắt Buộc</button>
+        <button
+          type="submit"
+          class="btn"
+          style="width: 100%; padding: 15px; font-size: 1.1rem"
+        >
+          Nộp Bài Bắt Buộc
+        </button>
       </form>
     </div>
 
@@ -103,9 +110,12 @@
           const minutes = Math.floor(timeInSeconds / 60);
           const seconds = timeInSeconds % 60;
           // Format dạng 00:00
-          timeDisplay.textContent = 
-            (minutes < 10 ? "0" : "") + minutes + ":" + 
-            (seconds < 10 ? "0" : "") + seconds;
+          timeDisplay.textContent =
+            (minutes < 10 ? "0" : "") +
+            minutes +
+            ":" +
+            (seconds < 10 ? "0" : "") +
+            seconds;
         }
       }, 1000);
     </script>

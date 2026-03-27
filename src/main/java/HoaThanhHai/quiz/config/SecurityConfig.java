@@ -28,23 +28,29 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 "/",
+                "/index",
                 "/login",
                 "/register",
-                "/index",
-                "/quizzes",
-                "/quiz/**",
-                "/result/**",
-                "/history",
+                "/join",
+                "/activity",
                 "/css/**",
                 "/js/**",
                 "/images/**"
             ).permitAll()
             .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers("/api/admin/**").hasRole("Admin")
-            .requestMatchers("/api/quizzes/**").hasAnyRole("User","Admin")
+            .requestMatchers("/api/quiz/**").hasAnyRole("User","Admin")
+            .requestMatchers("/quiz", "/quiz/**").hasAnyRole("User","Admin")
+            .requestMatchers("/result/**").hasAnyRole("User","Admin")
+            .requestMatchers("/history").hasAnyRole("User","Admin")
+            .requestMatchers("/quiz/create").hasAnyRole("User","Admin")
             .anyRequest()
             .authenticated())
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        .formLogin(form -> form
+            .loginPage("/login")
+            .defaultSuccessUrl("/quiz", true)
+            .permitAll());
         return http.build();
     }  
 }

@@ -1,12 +1,26 @@
 .join-container {
   max-width: 500px;
   margin: 80px auto;
-  background: #fff;
+  background: var(--bg-secondary);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   text-align: center;
+  border: 2px solid var(--accent-primary);
 }
+
+.join-container h2,
+.join-container h3 {
+  color: var(--accent-primary);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.join-container p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
 .pin-input {
   width: 100%;
   padding: 15px;
@@ -14,12 +28,39 @@
   font-weight: bold;
   text-align: center;
   letter-spacing: 8px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--border);
   border-radius: 8px;
   margin-bottom: 20px;
   text-transform: uppercase;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
+
 .pin-input:focus {
-  border-color: #4caf50;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
   outline: none;
+}
+
+.join-container .btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.join-container .btn-success {
+  background: linear-gradient(90deg, var(--success) 0%, #059669 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+.join-container .btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
 }

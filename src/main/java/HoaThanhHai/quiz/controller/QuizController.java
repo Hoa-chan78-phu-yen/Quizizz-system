@@ -14,7 +14,7 @@ import HoaThanhHai.quiz.entity.Quiz;
 import HoaThanhHai.quiz.service.QuizService;
 
 @RestController
-@RequestMapping("/api/quizzes")
+@RequestMapping("/api/quiz")
 public class QuizController {
 
     @Autowired

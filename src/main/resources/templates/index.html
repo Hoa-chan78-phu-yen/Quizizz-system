@@ -8,46 +8,36 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" th:href="@{/css/index.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
   </head>
   <body>
-    <header class="bg-primary text-white py-3">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="h4 mb-0">Quizz</h1>
-          <nav>
-            <a th:href="@{/}" class="text-white text-decoration-none me-3"
-              >Trang chủ</a
-            >
-            <a
-              th:href="@{/quizzes}"
-              class="text-white text-decoration-none me-3"
-              >Danh sách bài thi</a
-            >
-            <a th:href="@{/login}" class="text-white text-decoration-none me-3" data-auth="login"
-              >Đăng nhập</a
-            >
-            <a th:href="@{/register}" class="text-white text-decoration-none me-3" data-auth="login"
-              >Đăng ký</a
-            >
-            <a href="#" id="logoutBtn" class="text-white text-decoration-none" data-auth="logout" style="display: none;"
-              >Đăng xuất</a
-            >
-          </nav>
-        </div>
+    <header class="app-header">
+      <div class="app-header__inner">
+        <a th:href="@{/index}" class="app-logo">
+          <span class="app-logo__mark">Q</span>
+          <span>Quiz</span>
+        </a>
+        <nav class="app-nav">
+          <a th:href="@{/index}" class="is-active">Trang chủ</a>
+          <a th:href="@{/quiz}">Danh sách bài thi</a>
+          <a th:href="@{/activity}">Hoạt động</a>
+          <a th:href="@{/history}">Lịch sử</a>
+          <a th:href="@{/login}" data-auth="login">Đăng nhập</a>
+          <a th:href="@{/register}" data-auth="login">Đăng ký</a>
+          <a href="#" id="logoutBtn" data-auth="logout" style="display: none">Đăng xuất</a>
+        </nav>
       </div>
     </header>
 
-    <div class="container text-center my-5">
-      <h2 class="mb-4">Chào mừng bạn đến với Online Quiz!</h2>
-      <p class="lead mb-4">
-        Hệ thống cung cấp các bài thi trắc nghiệm đa dạng, giúp bạn ôn tập và
-        kiểm tra kiến thức một cách hiệu quả.
-      </p>
-      <a th:href="@{/quizzes}" class="btn btn-primary btn-lg"
-        >Khám phá bài thi ngay</a
-      >
-    </div>
+    <main class="app-main page-stack">
+      <div class="hero-panel">
+        <div class="button-row" style="margin-top: 28px">
+          <a th:href="@{/quiz}" class="btn btn-primary btn-lg">Khám phá bài thi</a>
+          <a th:href="@{/join}" class="btn btn-outline-secondary btn-lg">Vào bằng mã PIN</a>
+          <a th:href="@{/activity}" class="btn btn-secondary btn-lg">Trang activity</a>
+        </div>
+      </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/auth.js}"></script>

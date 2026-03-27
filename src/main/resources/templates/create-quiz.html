@@ -12,166 +12,162 @@
     <link rel="stylesheet" th:href="@{/css/create-quiz.css}" />
   </head>
   <body>
-    <header class="bg-primary text-white py-3">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="h4 mb-0">Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-          <nav>
-            <a th:href="@{/}" class="text-white text-decoration-none me-3"
-              >Trang chủ</a
-            >
-            <a
-              th:href="@{/quizzes}"
-              class="text-white text-decoration-none me-3"
-              >Danh sách bài thi</a
-            >
-            <a
-              href="#"
-              id="logoutBtn"
-              class="text-white text-decoration-none"
-              data-auth="logout"
-              >Đăng xuất</a
-            >
-          </nav>
-        </div>
+    <header class="app-header">
+      <div class="app-header__inner">
+        <a th:href="@{/index}" class="app-logo">
+          <span class="app-logo__mark">Q</span>
+          <span>Quiz</span>
+        </a>
+        <nav class="app-nav">
+          <a th:href="@{/index}">Trang chủ</a>
+          <a th:href="@{/quiz}">Danh sách bài thi</a>
+          <a th:href="@{/history}">Lịch sử</a>
+          <a href="#" id="logoutBtn" data-auth="logout">Đăng xuất</a>
+        </nav>
       </div>
     </header>
 
-    <div class="container create-quiz-page">
-      <h2>Tạo Bài Quiz Mới</h2>
-
-      <div id="message" class="d-none"></div>
-
-      <form id="createQuizForm" th:action="@{/quiz/create}" method="post">
-        <!-- Quiz Info Section -->
-        <div class="form-section">
-          <h3>Thông tin bài thi</h3>
-
-          <div class="form-group">
-            <label for="title" class="form-label"
-              >Tiêu đề bài thi <span class="text-danger">*</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="title"
-              name="title"
-              placeholder="Nhập tiêu đề bài thi..."
-              required
-            />
+    <main class="app-main page-stack">
+      <section class="surface-card create-quiz-page">
+        <div class="section-heading">
+          <div>
+            <h1 class="section-title">Tạo bài quiz mới</h1>
+            <p class="section-copy">
+              Thiết kế bài thi rõ ràng, chọn danh mục và thêm câu hỏi ngay trên
+              một form duy nhất.
+            </p>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="description" class="form-label">Mô tả</label>
-            <textarea
-              class="form-control"
-              id="description"
-              name="description"
-              placeholder="Nhập mô tả bài thi..."
-              rows="4"
-            ></textarea>
-          </div>
+        <div id="message" class="d-none"></div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="timeLimit" class="form-label"
-                >Thời gian làm bài (phút)</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                id="timeLimit"
-                name="totalTimeLimit"
-                placeholder="15"
-                min="1"
-              />
-            </div>
+        <form id="createQuizForm">
+          <div class="form-section">
+            <h3>Thông tin bài thi</h3>
 
             <div class="form-group">
-              <label for="category" class="form-label">Danh mục</label>
-              <div class="btn-group w-100 mb-3" role="group">
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="categoryChoice"
-                  id="categoryExisting"
-                  value="existing"
-                  checked
-                />
-                <label class="btn btn-outline-primary" for="categoryExisting"
-                  >Danh mục sẵn có</label
-                >
-
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="categoryChoice"
-                  id="categoryNew"
-                  value="new"
-                />
-                <label class="btn btn-outline-primary" for="categoryNew"
-                  >Tạo danh mục mới</label
-                >
-              </div>
-
-              <!-- Existing categories dropdown -->
-              <select
-                class="form-control"
-                id="categorySelect"
-                name="categoryId"
+              <label for="title" class="form-label"
+                >Tiêu đề bài thi <span class="text-danger">*</span></label
               >
-                <option value="">-- Chọn danh mục --</option>
-                <option
-                  th:each="c : ${categories}"
-                  th:value="${c.categoryId}"
-                  th:text="${c.categoryName}"
-                ></option>
-              </select>
-
-              <!-- New category input -->
               <input
                 type="text"
-                class="form-control d-none"
-                id="categoryInput"
-                name="categoryName"
-                placeholder="Nhập tên danh mục mới..."
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="Ví dụ: Lập trình Java Cơ Bản..."
+                required
               />
             </div>
-          </div>
-        </div>
 
-        <!-- Questions Section -->
-        <div class="form-section">
-          <h3>Câu hỏi</h3>
-          <div id="questionsContainer">
-            <!-- Questions will be added here dynamically -->
-          </div>
-          <button
-            type="button"
-            class="btn btn-primary btn-sm"
-            onclick="addQuestion()"
-          >
-            + Thêm câu hỏi
-          </button>
-        </div>
+            <div class="form-group">
+              <label for="description" class="form-label">Mô tả bài thi</label>
+              <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                placeholder="Nhập mô tả chi tiết về bài thi này..."
+                rows="4"
+              ></textarea>
+            </div>
 
-        <!-- Submit Section -->
-        <div class="btn-group">
-          <button type="submit" class="btn btn-success">Lưu bài thi</button>
-          <a th:href="@{/}" class="btn btn-secondary">Hủy</a>
-        </div>
-      </form>
-    </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="timeLimit" class="form-label"
+                  >Thời gian làm bài (phút)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="timeLimit"
+                  name="totalTimeLimit"
+                  placeholder="15"
+                  min="1"
+                  max="180"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="category" class="form-label">Danh mục</label>
+                <div class="btn-group w-100 mb-3" role="group">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="categoryChoice"
+                    id="categoryExisting"
+                    value="existing"
+                    checked
+                  />
+                  <label class="btn btn-outline-primary" for="categoryExisting"
+                    >Danh mục sẵn có</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="categoryChoice"
+                    id="categoryNew"
+                    value="new"
+                  />
+                  <label class="btn btn-outline-primary" for="categoryNew"
+                    >Tạo danh mục mới</label
+                  >
+                </div>
+
+                <select
+                  class="form-control"
+                  id="categorySelect"
+                  name="categoryId"
+                >
+                  <option value="">-- Chọn danh mục --</option>
+                  <option
+                    th:each="c : ${categories}"
+                    th:value="${c.categoryId}"
+                    th:text="${c.categoryName}"
+                  ></option>
+                </select>
+
+                <input
+                  type="text"
+                  class="form-control d-none"
+                  id="categoryInput"
+                  name="categoryName"
+                  placeholder="Nhập tên danh mục mới..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Câu hỏi</h3>
+            <div id="questionsContainer"></div>
+            <button
+              type="button"
+              class="btn btn-primary btn-block"
+              onclick="addQuestion()"
+            >
+              Thêm câu hỏi
+            </button>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" id="submitBtn" class="btn btn-success">
+              Lưu bài thi
+            </button>
+            <a th:href="@{/quiz}" class="btn btn-secondary">Hủy</a>
+          </div>
+        </form>
+      </section>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/auth.js}"></script>
     <script>
-      // Handle category choice toggle
       document.addEventListener("DOMContentLoaded", function () {
         const categoryExisting = document.getElementById("categoryExisting");
         const categoryNew = document.getElementById("categoryNew");
         const categorySelect = document.getElementById("categorySelect");
         const categoryInput = document.getElementById("categoryInput");
+        const createQuizForm = document.getElementById("createQuizForm");
 
         function updateCategoryDisplay() {
           if (categoryExisting.checked) {
@@ -190,38 +186,150 @@
         categoryExisting.addEventListener("change", updateCategoryDisplay);
         categoryNew.addEventListener("change", updateCategoryDisplay);
 
-        // Validate form on submit
-        document
-          .getElementById("createQuizForm")
-          .addEventListener("submit", function (e) {
-            const title = document.getElementById("title").value.trim();
+        createQuizForm.addEventListener("submit", function (e) {
+          e.preventDefault();
 
-            if (!title) {
-              e.preventDefault();
-              showMessage("Vui lòng nhập tiêu đề bài thi!", "danger");
-              return false;
-            }
+          const title = document.getElementById("title").value.trim();
+          const categoryChoice = document.querySelector(
+            'input[name="categoryChoice"]:checked',
+          ).value;
 
-            // Check category selection
-            if (categoryExisting.checked && !categorySelect.value) {
-              e.preventDefault();
+          if (!title) {
+            showMessage("Vui lòng nhập tiêu đề bài thi!", "danger");
+            return false;
+          }
+
+          let categoryId = null;
+          let categoryName = null;
+
+          if (categoryChoice === "existing") {
+            categoryId = document.getElementById("categorySelect").value;
+            if (!categoryId) {
               showMessage("Vui lòng chọn danh mục!", "danger");
               return false;
             }
-
-            if (categoryNew.checked && !categoryInput.value.trim()) {
-              e.preventDefault();
+          } else {
+            categoryName = document
+              .getElementById("categoryInput")
+              .value.trim();
+            if (!categoryName) {
               showMessage("Vui lòng nhập tên danh mục mới!", "danger");
               return false;
             }
-          });
+          }
+
+          const questionsContainer =
+            document.getElementById("questionsContainer");
+          if (questionsContainer.children.length === 0) {
+            showMessage("Vui lòng thêm ít nhất một câu hỏi!", "danger");
+            return false;
+          }
+
+          const questions = [];
+          const questionItems =
+            questionsContainer.querySelectorAll(".question-item");
+
+          for (let questionItem of questionItems) {
+            const content = questionItem
+              .querySelector('textarea[name*=".content"]')
+              .value.trim();
+            if (!content) {
+              showMessage(
+                "Vui lòng nhập nội dung cho tất cả câu hỏi!",
+                "danger",
+              );
+              return false;
+            }
+
+            const correctAnswerRadio = questionItem.querySelector(
+              'input[type="radio"]:checked',
+            );
+            if (!correctAnswerRadio) {
+              showMessage(
+                "Vui lòng chọn đáp án đúng cho tất cả câu hỏi!",
+                "danger",
+              );
+              return false;
+            }
+
+            const correctAnswerIndex = parseInt(correctAnswerRadio.value);
+            const answerInputs = questionItem.querySelectorAll(
+              'input[name*=".answers"]',
+            );
+
+            const answers = [];
+            for (let i = 0; i < answerInputs.length; i++) {
+              const answerText = answerInputs[i].value.trim();
+              if (!answerText) {
+                showMessage(
+                  "Vui lòng nhập nội dung cho tất cả đáp án!",
+                  "danger",
+                );
+                return false;
+              }
+              answers.push({
+                content: answerText,
+                isCorrect: i === correctAnswerIndex,
+              });
+            }
+
+            questions.push({
+              content: content,
+              answers: answers,
+              correctAnswer: correctAnswerIndex,
+            });
+          }
+
+          const requestData = {
+            title: title,
+            description: document.getElementById("description").value.trim(),
+            totalTimeLimit:
+              parseInt(document.getElementById("timeLimit").value) || 15,
+            categoryId: categoryId,
+            categoryName: categoryName,
+            questions: questions,
+          };
+
+          const submitBtn = document.getElementById("submitBtn");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Đang lưu...";
+          const authHeaders = getAuthHeader();
+
+          fetch("/quiz/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest",
+              ...authHeaders,
+            },
+            body: JSON.stringify(requestData),
+          })
+            .then((response) => {
+              if (response.ok) {
+                showMessage("Tạo bài thi thành công!", "success");
+                setTimeout(() => {
+                  window.location.href = "/quiz";
+                }, 1500);
+              } else {
+                return response.text().then((text) => {
+                  throw new Error(text);
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              showMessage("Lỗi: " + error.message, "danger");
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Lưu bài thi";
+            });
+        });
 
         updateCategoryDisplay();
       });
 
       function showMessage(text, type) {
         const messageDiv = document.getElementById("message");
-        messageDiv.className = `alert alert-${type === "error" ? "danger" : type} mt-3`;
+        messageDiv.className = `alert alert-${type === "danger" ? "danger" : "success"} mt-3`;
         messageDiv.textContent = text;
         messageDiv.classList.remove("d-none");
         setTimeout(() => messageDiv.classList.add("d-none"), 5000);
@@ -235,37 +343,36 @@
           <div class="question-item">
             <div class="form-group">
               <label class="form-label">Câu hỏi ${index + 1}</label>
-              <textarea class="form-control" name="questions[${index}].content" placeholder="Nhập nội dung câu hỏi..." rows="2"></textarea>
+              <textarea class="form-control" name="questions[${index}].content" placeholder="Nhập nội dung câu hỏi..." rows="2" required></textarea>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Đáp án</label>
+              <label class="form-label">Chọn đáp án đúng</label>
               <div class="answer-item">
-                <input type="radio" name="questions[${index}].correctAnswer" value="0" />
-                <input type="text" class="form-control" name="questions[${index}].answers[0]" placeholder="Đáp án 1" />
+                <input type="radio" name="questions[${index}].correctAnswer" value="0" required />
+                <input type="text" class="form-control" name="questions[${index}].answers[0]" placeholder="Đáp án 1" required />
               </div>
               <div class="answer-item">
-                <input type="radio" name="questions[${index}].correctAnswer" value="1" />
-                <input type="text" class="form-control" name="questions[${index}].answers[1]" placeholder="Đáp án 2" />
+                <input type="radio" name="questions[${index}].correctAnswer" value="1" required />
+                <input type="text" class="form-control" name="questions[${index}].answers[1]" placeholder="Đáp án 2" required />
               </div>
               <div class="answer-item">
-                <input type="radio" name="questions[${index}].correctAnswer" value="2" />
-                <input type="text" class="form-control" name="questions[${index}].answers[2]" placeholder="Đáp án 3" />
+                <input type="radio" name="questions[${index}].correctAnswer" value="2" required />
+                <input type="text" class="form-control" name="questions[${index}].answers[2]" placeholder="Đáp án 3" required />
               </div>
               <div class="answer-item">
-                <input type="radio" name="questions[${index}].correctAnswer" value="3" />
-                <input type="text" class="form-control" name="questions[${index}].answers[3]" placeholder="Đáp án 4" />
+                <input type="radio" name="questions[${index}].correctAnswer" value="3" required />
+                <input type="text" class="form-control" name="questions[${index}].answers[3]" placeholder="Đáp án 4" required />
               </div>
             </div>
 
-            <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Xóa câu hỏi</button>
+            <button type="button" class="btn btn-danger" onclick="this.closest('.question-item').remove()">Xóa câu hỏi</button>
           </div>
         `;
 
         container.insertAdjacentHTML("beforeend", questionHTML);
       }
 
-      // Add first question automatically
       window.addEventListener("DOMContentLoaded", function () {
         addQuestion();
       });

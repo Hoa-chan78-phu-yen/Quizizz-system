@@ -23,5 +23,6 @@ public class Answer {
     private Boolean isCorrect;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 }

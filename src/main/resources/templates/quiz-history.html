@@ -1,77 +1,142 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Lịch sử làm bài</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lịch Sử Làm Bài</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/quiz-history.css}" />
+    <style>
+      .history-wrap {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .history-card {
+        background: linear-gradient(180deg, #1f2638 0%, #171d2b 100%);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      .history-title {
+        color: #f8fafc;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .table {
+        margin-bottom: 0;
+        color: #e5e7eb;
+      }
+
+      .table thead th {
+        background: #0f172a;
+        color: #f8fafc;
+        border-color: #334155;
+      }
+
+      .table tbody td,
+      .table tbody th {
+        background: rgba(255, 255, 255, 0.03);
+        color: #e5e7eb;
+        border-color: rgba(148, 163, 184, 0.16);
+        vertical-align: middle;
+      }
+
+      .table tbody tr:hover td,
+      .table tbody tr:hover th {
+        background: rgba(99, 102, 241, 0.12);
+      }
+
+      .empty-state {
+        color: #cbd5e1;
+        text-align: center;
+        padding: 24px 0;
+      }
+
+      .score-badge {
+        background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+    </style>
   </head>
   <body>
-    <header class="bg-primary text-white py-3">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="h4 mb-0">Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-          <nav>
-            <a th:href="@{/quizzes}" class="text-white text-decoration-none me-3">Danh sách bài thi</a>
-            <a href="#" id="logoutBtn" class="text-white text-decoration-none" data-auth="logout">Đăng xuất</a>
+    <header>
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <h1 style="color: var(--accent-primary); margin: 0">Quiz</h1>
+          <nav style="display: flex; gap: 1.5rem">
+            <a th:href="@{/quiz}">Danh sách bài thi</a>
+            <a href="#" id="logoutBtn" data-auth="logout">Đăng xuất</a>
           </nav>
         </div>
       </div>
     </header>
 
-    <div class="container mt-5">
-      <h2 class="mb-4">Lịch sử làm bài trắc nghiệm</h2>
+    <main class="history-wrap">
+      <section class="history-card">
+        <h2 class="history-title">Lịch sử làm bài trắc nghiệm</h2>
 
-      <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên bài kiểm tra</th>
-              <th scope="col">Ngày làm bài</th>
-              <th scope="col">Số câu đúng</th>
-              <th scope="col">Điểm số</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:if="${#lists.isEmpty(histories)}">
-              <td colspan="5" class="text-center">
-                Bạn chưa làm bài quiz nào.
-              </td>
-            </tr>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên bài thi</th>
+                <th scope="col">Ngày làm bài</th>
+                <th scope="col">Số câu đúng</th>
+                <th scope="col">Điểm số</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:if="${#lists.isEmpty(results)}">
+                <td colspan="5" class="empty-state">Bạn chưa làm bài quiz nào.</td>
+              </tr>
 
-            <tr th:each="history, stat : ${histories}">
-              <th scope="row" th:text="${stat.count}">1</th>
-              <td th:text="${history.quizTitle}">Bài kiểm tra Java</td>
-              <td
-                th:text="${#temporals.format(history.submitTime, 'dd-MM-yyyy HH:mm')}"
-              >
-                25-10-2023 14:30
-              </td>
-              <td>
-                <span th:text="${history.correctAnswers}"></span> /
-                <span th:text="${history.totalQuestions}"></span>
-              </td>
-              <td>
-                <span
-                  class="badge bg-primary"
-                  th:text="${history.score}"
-                ></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <tr th:each="result, stat : ${results}">
+                <th scope="row" th:text="${stat.count}">1</th>
+                <td th:text="${result.quiz != null ? result.quiz.title : 'Không có dữ liệu'}">
+                  Bài kiểm tra Java
+                </td>
+                <td
+                  th:text="${result.completedAt != null ? #temporals.format(result.completedAt, 'dd-MM-yyyy HH:mm') : 'Chưa có dữ liệu'}"
+                >
+                  28-03-2026 06:30
+                </td>
+                <td
+                  th:text="${(result.totalCorrect != null ? result.totalCorrect : 0) + ' / ' + (result.totalQuestions != null ? result.totalQuestions : 0)}"
+                >
+                  8 / 10
+                </td>
+                <td>
+                  <span
+                    class="score-badge"
+                    th:text="${result.score != null ? #numbers.formatDecimal(result.score, 1, 0) : '0'}"
+                  >
+                    8
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <div class="mt-3">
-        <a th:href="@{/quizzes}" class="btn btn-secondary"
-          >&larr; Quay lại danh sách Quiz</a
-        >
-      </div>
-    </div>
+        <div class="mt-4">
+          <a th:href="@{/quiz}" class="btn btn-primary">Quay lại danh sách Quiz</a>
+        </div>
+      </section>
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/auth.js}"></script>
   </body>
