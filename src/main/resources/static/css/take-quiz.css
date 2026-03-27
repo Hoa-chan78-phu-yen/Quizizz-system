@@ -1,0 +1,14 @@
+/* CSS riêng cho trang take-quiz */
+.take-quiz-page .card {
+  border: 1px solid #dce3e8;
+  border-radius: 12px;
+}
+
+.take-quiz-page .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.take-quiz-page .form-check-input:checked + .form-check-label {
+  font-weight: 600;
+}

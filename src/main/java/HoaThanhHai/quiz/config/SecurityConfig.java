@@ -29,9 +29,12 @@ public class SecurityConfig {
             .requestMatchers(
                 "/login",
                 "/register",
-                "/index"
-                ,
+                "/index",
+                "/quizzes",
                 "/",
+                "/quiz/**",
+                "/history",
+                "/result/**",
                 "/css/**",
                 "/js/**"
             ).permitAll()
@@ -42,16 +45,5 @@ public class SecurityConfig {
             .authenticated())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    }
-    // @Bean
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    //     http
-    //         .csrf(csrf -> csrf.disable()) // Tắt CSRF để dễ dàng test API qua Postman
-    //         .authorizeHttpRequests(auth -> auth
-    //             .anyRequest().permitAll() // Cho phép truy cập TẤT CẢ các đường dẫn mà không cần đăng nhập
-    //         );
-    //     return http.build();
-    // }
-
-    
+    }  
 }

@@ -4,32 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trang Chủ - Online Quiz</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
   </head>
   <body>
-    <header>
-      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-      <nav>
-        <a th:href="@{/}">Trang chủ</a>
-        <a th:href="@{/quizzes}">Danh sách bài thi</a>
-        <a th:href="@{/login}">Đăng nhập</a>
-        <a th:href="@{/register}">Đăng ký</a>
-      </nav>
+    <header class="bg-primary text-white py-3">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="h4 mb-0">Quizz</h1>
+          <nav>
+            <a th:href="@{/}" class="text-white text-decoration-none me-3"
+              >Trang chủ</a
+            >
+            <a
+              th:href="@{/quizzes}"
+              class="text-white text-decoration-none me-3"
+              >Danh sách bài thi</a
+            >
+            <a th:href="@{/login}" class="text-white text-decoration-none me-3" data-auth="login"
+              >Đăng nhập</a
+            >
+            <a th:href="@{/register}" class="text-white text-decoration-none me-3" data-auth="login"
+              >Đăng ký</a
+            >
+            <a href="#" id="logoutBtn" class="text-white text-decoration-none" data-auth="logout" style="display: none;"
+              >Đăng xuất</a
+            >
+          </nav>
+        </div>
+      </div>
     </header>
 
-    <div class="container text-center">
-      <h2 style="margin-bottom: 20px">Chào mừng bạn đến với Online Quiz!</h2>
-      <p>
+    <div class="container text-center my-5">
+      <h2 class="mb-4">Chào mừng bạn đến với Online Quiz!</h2>
+      <p class="lead mb-4">
         Hệ thống cung cấp các bài thi trắc nghiệm đa dạng, giúp bạn ôn tập và
         kiểm tra kiến thức một cách hiệu quả.
       </p>
-      <br />
-      <a
-        th:href="@{/quizzes}"
-        class="btn"
-        style="width: auto; display: inline-block; padding: 10px 25px"
+      <a th:href="@{/quizzes}" class="btn btn-primary btn-lg"
         >Khám phá bài thi ngay</a
       >
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/auth.js}"></script>
   </body>
 </html>

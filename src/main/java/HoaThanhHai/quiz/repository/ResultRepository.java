@@ -11,4 +11,7 @@ public interface ResultRepository extends JpaRepository<Result, Integer> {
     List<Result> findByUser_UserId(Integer userId);
 
     List<Result> findByQuiz_QuizId(Integer quizId);
+
+    List<Result> findByUserUsername(String username);
+    
 }

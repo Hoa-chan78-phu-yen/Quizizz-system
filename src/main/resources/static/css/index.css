@@ -1,0 +1,15 @@
+/* CSS riêng cho trang index */
+body.home-page {
+  background: linear-gradient(135deg, #edf2ff 0%, #f4f7f6 100%);
+}
+
+.home-hero {
+  padding: 4rem 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.home-hero h2 {
+  color: #0056b3;
+}

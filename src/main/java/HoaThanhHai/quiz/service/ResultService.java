@@ -84,4 +84,14 @@ public class ResultService {
 
         return resultRepository.save(result);
     }
+
+    public Result getById(Integer id) {
+        return resultRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Result not found"));
+    }
+
+    public List<Result> getByUser(String username) {
+        return resultRepository.findByUserUsername(username);
+    }
+
 }

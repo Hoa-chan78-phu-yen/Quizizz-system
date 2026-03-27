@@ -1,0 +1,8 @@
+/* CSS riêng cho trang register */
+.register-page main {
+  min-height: calc(100vh - 140px);
+}
+
+.register-page .form-container {
+  border: 2px solid #0056b3;
+}

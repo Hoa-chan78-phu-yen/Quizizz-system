@@ -4,108 +4,141 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập - Online Quiz</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
   </head>
   <body>
-    <header>
-      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-      <nav>
-        <a th:href="@{/}">Trang chủ</a>
-      </nav>
+    <header class="bg-primary text-white py-3">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="h4 mb-0">Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+          <nav>
+            <a th:href="@{/}" class="text-white text-decoration-none me-3"
+              >Trang chủ</a
+            >
+          </nav>
+        </div>
+      </div>
     </header>
 
-    <<!doctype html>
+    <div class="container">
+      <div class="login-container">
+        <h2 class="text-center mb-4">Đăng Nhập</h2>
 
-    <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Đăng nhập - Online Quiz</title>
-        <link rel="stylesheet" th:href="@{/css/style.css}" />
-      </head>
-      <body>
-        <header>
-          <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-          <nav>
-            <a th:href="@{/}">Trang chủ</a>
-          </nav>
-        </header>
+        <div id="message" class="d-none"></div>
 
-        ```
-        <div class="form-container">
-          <h2>Đăng Nhập</h2>
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="email" class="form-label">Tên đăng nhập / Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              placeholder="Nhập email..."
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Nhập mật khẩu..."
+              required
+            />
+          </div>
 
-          <!-- 🔥 THÊM id để JS bắt sự kiện -->
-          <form id="loginForm">
-            <div class="form-group">
-              <label for="email">Tên đăng nhập / Email</label>
-              <input
-                type="text"
-                id="email"
-                placeholder="Nhập email..."
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="password">Mật khẩu</label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Nhập mật khẩu..."
-                required
-              />
-            </div>
+          <button type="submit" class="btn btn-primary btn-login">
+            Đăng Nhập
+          </button>
+        </form>
 
-            <!-- 🔥 đổi type thành submit -->
-            <button type="submit" class="btn">Đăng Nhập</button>
-          </form>
+        <p class="text-center mt-3">
+          Chưa có tài khoản?
+          <a th:href="@{/register}" class="text-decoration-none"
+            >Đăng ký ngay</a
+          >
+        </p>
+      </div>
+    </div>
 
-          <p class="text-center">
-            Chưa có tài khoản? <a th:href="@{/register}">Đăng ký ngay</a>
-          </p>
-        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-        <!-- 🔥 SCRIPT LOGIN -->
-        <script>
-          document
-            .getElementById("loginForm")
-            .addEventListener("submit", async function (e) {
-              e.preventDefault();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
 
-              const email = document.getElementById("email").value;
-              const password = document.getElementById("password").value;
+          // Validation cơ bản
+          if (!email || !password) {
+            showMessage("Vui lòng nhập đầy đủ thông tin!", "error");
+            return;
+          }
 
-              try {
-                const res = await fetch("/api/auth/login", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    email: email,
-                    password: password,
-                  }),
-                });
+          // Hiển thị loading
+          const submitBtn = document.querySelector(".btn-login");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Đang đăng nhập...";
 
-                if (!res.ok) {
-                  alert("Sai tài khoản hoặc mật khẩu!");
-                  return;
-                }
-
-                const data = await res.json();
-
-                // 🔥 lưu token
-                localStorage.setItem("token", data.token);
-
-                // 👉 chuyển sang trang quiz
-                window.location.href = "/index";
-              } catch (err) {
-                console.error(err);
-                alert("Lỗi kết nối server!");
-              }
+          try {
+            const res = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: email,
+                password: password,
+              }),
             });
-        </script>
-      </body>
-    </html>
+
+            if (!res.ok) {
+              const errorData = await res.json();
+              showMessage(
+                errorData.message || "Sai tài khoản hoặc mật khẩu!",
+                "error",
+              );
+              return;
+            }
+
+            const data = await res.json();
+
+            // Lưu token
+            localStorage.setItem("token", data.token);
+
+            showMessage(
+              "Đăng nhập thành công! Đang chuyển hướng...",
+              "success",
+            );
+
+            // Chuyển sang trang chính
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1000);
+          } catch (err) {
+            console.error(err);
+            showMessage("Lỗi kết nối server! Vui lòng thử lại.", "error");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Đăng Nhập";
+          }
+        });
+
+      function showMessage(text, type) {
+        const messageDiv = document.getElementById("message");
+        messageDiv.className = `alert alert-${type === "error" ? "danger" : "success"} mt-3`;
+        messageDiv.textContent = text;
+        messageDiv.classList.remove("d-none");
+        setTimeout(() => messageDiv.classList.add("d-none"), 5000);
+      }
+    </script>
+    <script th:src="@{/js/auth.js}"></script>
   </body>
 </html>

@@ -1,0 +1,12 @@
+/* CSS riêng cho trang quiz-result */
+.quiz-result-page .card {
+  border: 1px solid #007bff;
+}
+
+.quiz-result-page .card-header {
+  background: linear-gradient(90deg, #007bff, #004494);
+}
+
+i.quiz-result-page .display-1 {
+  font-size: 4rem;
+}

@@ -4,45 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Danh sách bài thi - Online Quiz</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/quiz-list.css}" />
   </head>
   <body>
-    <header>
-      <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-      <nav>
-        <a th:href="@{/}">Trang chủ</a>
-        <a th:href="@{/login}">Đăng nhập</a>
-      </nav>
-    </header>
-
-    <div class="container">
-      <h2>Danh sách bài thi hiện có</h2>
-
-      <!-- Danh sách giả lập (Hardcode) chưa có dữ liệu từ Database -->
-      <div class="quiz-grid">
-        <div class="quiz-card">
-          <h3>Lập trình Java Cơ Bản</h3>
-          <p>
-            Kiểm tra kiến thức về biến, vòng lặp, và hướng đối tượng trong Java.
-          </p>
-          <p><strong>Thời gian:</strong> 15 phút</p>
-          <a href="#" class="btn-start">Bắt đầu thi</a>
-        </div>
-
-        <div class="quiz-card">
-          <h3>Lập trình Web với Spring Boot</h3>
-          <p>Bài thi tổng hợp về cấu trúc MVC, REST API và JPA.</p>
-          <p><strong>Thời gian:</strong> 30 phút</p>
-          <a href="#" class="btn-start">Bắt đầu thi</a>
-        </div>
-
-        <div class="quiz-card">
-          <h3>Kiến thức HTML & CSS</h3>
-          <p>Đánh giá kỹ năng thiết kế và căn chỉnh giao diện website.</p>
-          <p><strong>Thời gian:</strong> 20 phút</p>
-          <a href="#" class="btn-start">Bắt đầu thi</a>
+    <header class="bg-primary text-white py-3">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="h4 mb-0">Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+          <nav>
+            <a th:href="@{/}" class="text-white text-decoration-none me-3"
+              >Trang chủ</a
+            >
+            <a th:href="@{/login}" class="text-white text-decoration-none me-3" data-auth="login"
+              >Đăng nhập</a
+            >
+            <a href="#" id="logoutBtn" class="text-white text-decoration-none" data-auth="logout" style="display: none;"
+              >Đăng xuất</a
+            >
+          </nav>
         </div>
       </div>
+    </header>
+
+    <div class="container my-5">
+      <h2 class="text-center mb-4">Danh sách bài thi hiện có</h2>
+
+      <div class="row" th:if="${quizzes != null and !quizzes.isEmpty()}">
+        <div class="col-md-4 mb-4" th:each="quiz : ${quizzes}">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${quiz.title}">Tên bài thi</h5>
+              <p class="card-text" th:text="${quiz.description}">
+                Mô tả bài thi
+              </p>
+              <p class="text-muted">
+                <strong>Thời gian:</strong>
+                <span th:text="${quiz.timeLimit}">15</span> phút
+              </p>
+              <a th:href="@{/quiz/{id}(id=${quiz.id})}" class="btn btn-success"
+                >Bắt đầu thi</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${quizzes == null or quizzes.isEmpty()}" class="text-center">
+        <p class="text-muted">Chưa có bài thi nào. Vui lòng quay lại sau!</p>
+      </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/auth.js}"></script>
   </body>
 </html>

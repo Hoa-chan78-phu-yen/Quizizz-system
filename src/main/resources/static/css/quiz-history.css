@@ -1,0 +1,9 @@
+/* CSS riêng cho trang quiz-history */
+.quiz-history-page .table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.quiz-history-page .btn {
+  min-width: 210px;
+}
